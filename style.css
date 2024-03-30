@@ -91,6 +91,10 @@ input{
     
 }
 
+input:focus {
+    outline: none;
+}
+
 #translate{
     width: 200px;
     padding: 10px;
@@ -103,11 +107,28 @@ input{
     cursor: pointer;
 }
 
-#bnt-speak{
+#btnSpeak{
     display: flex;
     align-items: center;
     border: none;
     background-color: transparent;
     cursor: pointer;
+    background-color: var(--color-primary);
+    border-radius: 100px;
+    padding: 1vh;
 }
+
+#btnListen{
+    display: flex;
+    align-items: center;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    background-color: var(--color-primary);
+    border-radius: 100px;
+    padding: 1vh;
+}
+
+
+
 
