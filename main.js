@@ -25,7 +25,7 @@ function darkModeToggle() {
 // })
 
 async function mandarUrl(texto) {
-    url = `https://api.mymemory.translated.net/get?q=${texto}&langpair=pt-br|eng`
+    const url = `https://api.mymemory.translated.net/get?q=${texto}&langpair=pt-br|eng`
     const response = await fetch(url)
     const data = await response.json()
 
@@ -33,31 +33,84 @@ async function mandarUrl(texto) {
 }
 
 async function traduzir() {
-    const texto = document.getElementById('portugues').value
-    const traducao = document.getElementById('ingles')
+    var texto = document.getElementById('portugues').value
+    var traducao = document.getElementById('ingles')
 
-    const trad = await mandarUrl(texto)
+    var trad = await mandarUrl(texto)
 
     console.log(trad)
 
     traducao.textContent = trad.responseData.translatedText
+     
+    // função para falar o texto traduzido
+var listenBtn = document.getElementById('btnListen')
+listenBtn.addEventListener('click', async function (){
+
+    if('speechSynthesis' in window){
+
+        const translated = trad.responseData.translatedText
+        const listenText = new SpeechSynthesisUtterance(translated)
+
+        speechSynthesis.speak(listenText)
+    
+
+    }else{
+        alert("navegador não compatível")
+    }
+})
 }
 
-const btnVoice = document.getElementById('btnSpeak')
 
-btnVoice.addEventListener('click', () => {
-    const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition || window.mozSpeechRecognition || window.msSpeechRecognition)();
 
-    recognition.lang = 'pt-PT';
 
-    recognition.onresults = (event) => {
-        const speechResult = event.results[0][0].transcript;
-        document.getElementById('portugues').value = speechResult;
-    };
 
-    recognition.start();
-});
 
+var speakBtn = document.getElementById('btnSpeak')
+speakBtn.addEventListener('click', function(){
+
+    var transcription = document.getElementById('portugues')
+
+    if(window.SpeechRecognition || window.webkitSpeechRecognition || window.mozSpeechRecognition || window.msSpeechRecognition){
+       
+        const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition || window.mozSpeechRecognition || window.msSpeechRecognition)();
+        recognition.lang = 'pt-BR';
+
+        try{
+            recognition.start()
+        }catch(erro){
+            console.log(erro)
+        }
+
+        recognition.addEventListener('result', function(event){
+            var result = event.results[0][0].transcript
+            transcription.placeholder = result
+        })
+
+    }else{
+        console.log('navegados não compatível')
+    }
+})
+
+
+    
+
+    // recognition.onresults = (event) => {
+    //     alert('chegou aqui')
+    //     const transcript = event.results[event.results.length - 1][0].transcript;
+    //     document.getElementById('portugues').textContent = transcript;
+    // };
+
+    // recognition.start();
+    // }else{
+    //     alert('Navegador não compatível')
+    // }
+
+// })
+
+
+   
+
+    
 
 
 
