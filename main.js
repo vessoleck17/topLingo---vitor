@@ -28,7 +28,6 @@ async function mandarUrl(texto) {
     const url = `https://api.mymemory.translated.net/get?q=${texto}&langpair=pt-br|eng`
     const response = await fetch(url)
     const data = await response.json()
-
     return data
 }
 
@@ -41,8 +40,12 @@ async function traduzir() {
     console.log(trad)
 
     traducao.textContent = trad.responseData.translatedText
+
      
+
     // função para falar o texto traduzido
+
+
 var listenBtn = document.getElementById('btnListen')
 listenBtn.addEventListener('click', async function (){
 
@@ -73,6 +76,11 @@ speakBtn.addEventListener('click', function(){
     if(window.SpeechRecognition || window.webkitSpeechRecognition || window.mozSpeechRecognition || window.msSpeechRecognition){
        
         const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition || window.mozSpeechRecognition || window.msSpeechRecognition)();
+        
+        if(recognition=='nathalia'){
+            
+        }
+        
         recognition.lang = 'pt-BR';
 
         try{
@@ -83,11 +91,11 @@ speakBtn.addEventListener('click', function(){
 
         recognition.addEventListener('result', function(event){
             var result = event.results[0][0].transcript
-            transcription.placeholder = result
+            transcription.value = result
         })
 
     }else{
-        console.log('navegados não compatível')
+        console.log('navegador não compatível')
     }
 })
 
